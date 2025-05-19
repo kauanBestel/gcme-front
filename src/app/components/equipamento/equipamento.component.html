@@ -1,0 +1,84 @@
+<form [formGroup]="equipamentoForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="nomeEquip">Nome do Equipamento</label>
+    <input
+      id="nomeEquip"
+      type="text"
+      formControlName="nomeEquip"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="descricaoEquip">Descrição</label>
+    <input
+      id="descricaoEquip"
+      type="text"
+      formControlName="descricaoEquip"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="dataManutencao">Data de Manutenção</label>
+    <input
+      id="dataManutencao"
+      type="date"
+      formControlName="dataManutencao"
+      class="form-control"
+    />
+  </div>
+  <div class="form-group">
+    <label for="proximaManutencao">Próxima Manutenção</label>
+    <input
+      id="proximaManutencao"
+      type="date"
+      formControlName="proximaManutencao"
+      class="form-control"
+    />
+  </div>
+
+  <!-- Botões de salvar/atualizar -->
+  <button type="submit" class="btn btn-primary">
+    {{ isEditMode ? "Atualizar" : "Salvar" }}
+  </button>
+  <!-- Botão cancelar só em edição -->
+  <button
+    type="button"
+    class="btn btn-secondary"
+    (click)="cancelEdit()"
+    *ngIf="isEditMode"
+  >
+    Cancelar
+  </button>
+</form>
+
+<!-- Listagem de equipamentos -->
+<table class="table mt-4" *ngIf="equipamentos.length > 0">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Descrição</th>
+      <th>Data Manutenção</th>
+      <th>Próx. Manutenção</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of equipamentos">
+      <td>{{ e.nomeEquip }}</td>
+      <td>{{ e.descricaoEquip }}</td>
+      <td>{{ e.dataManutencao | date : "shortDate" }}</td>
+      <td>{{ e.proximaManutencao | date : "shortDate" }}</td>
+      <td>
+        <button class="btn btn-sm btn-info" (click)="editEquipamento(e)">
+          Editar
+        </button>
+        <button
+          class="btn btn-sm btn-danger ml-2"
+          (click)="deleteEquipamento(e.id)"
+        >
+          Excluir
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
