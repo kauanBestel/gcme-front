@@ -1,14 +1,10 @@
 <div class="flex flex-row h-screen">
-  <!-- Sidebar à esquerda -->
-  <app-sidebar class="w-1/6"></app-sidebar>
-
-  <!-- Conteúdo principal à direita -->
+  <app-sidebar class="w-1/6"> </app-sidebar>
+  <mat-divider [vertical]="true"></mat-divider>
   <div class="flex-1 flex flex-col">
-    <!-- Header fixo no topo -->
     <app-header class="h-36"></app-header>
-
-    <!-- Conteúdo que ocupa o resto da altura -->
     <div class="flex-1 overflow-auto">
+      <app-search-bar></app-search-bar>
       <app-equipamento></app-equipamento>
     </div>
   </div>

@@ -7,12 +7,12 @@ import { Equipamento } from '../../../models/interface/equipamentoInterface';
 @Injectable({
   providedIn: 'root',
 })
-export class EquipamentoServiceService {
+export class EquipamentoService {
   private baseUrl = `${environment.ApiUrl}/equipamento`;
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Equipamento[]> {
+  public getAll(): Observable<Equipamento[]> {
     return this.http.get<Equipamento[]>(this.baseUrl);
   }
 
