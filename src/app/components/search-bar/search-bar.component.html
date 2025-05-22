@@ -1,11 +1,82 @@
-<div class="flex justify-between px-4 bg-[#f3f3f3]">
-  <search
-    class="border-2 bg-white rounded-2xl ps-2 flex w-3/5 pt-1.5 justify-start"
-    >Pesquisar por nome</search
-  >
+<!-- Botão modal -->
+<div class="flex justify-between bg-[#f3f3f3] px-4">
+  <!--searchbar-->
+  <search class="bg-white border-black w-180 border-1 rounded-2xl">
+    <img href="../../../../public/icons/search.svg" />
+  </search>
+
   <button
-    class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-all duration-200"
+    (click)="abrirModal()"
+    class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-md transition-all duration-200 cursor-pointer"
   >
     Novo Equipamento
   </button>
+
+  <!-- Modal -->
+  @if (modalAberto) {
+  <div
+    class="fixed inset-0 flex items-center justify-center z-50"
+    style="background-color: rgba(0, 0, 0, 0.5)"
+  >
+    <div class="bg-white p-6 rounded-xl w-96 space-y-4 border-1">
+      <h2 class="text-lg font-bold">Adicionar Equipamento</h2>
+
+      <form
+        (ngSubmit)="adicionarEquipamento()"
+        #formEquip="ngForm"
+        class="space-y-3"
+      >
+        <input
+          type="text"
+          [(ngModel)]="novoEquipamento.nomeEquip"
+          name="nomeEquip"
+          required
+          placeholder="Nome do Equipamento"
+          class="w-full border p-2 rounded"
+        />
+
+        <textarea
+          [(ngModel)]="novoEquipamento.descricaoEquip"
+          name="descricaoEquip"
+          required
+          placeholder="Descrição"
+          class="w-full border p-2 rounded"
+        ></textarea>
+
+        <input
+          type="date"
+          [(ngModel)]="novoEquipamento.dataManutencao"
+          name="dataManutencao"
+          required
+          class="w-full border p-2 rounded"
+        />
+
+        <input
+          type="date"
+          [(ngModel)]="novoEquipamento.proximaManutencao"
+          name="proximaManutencao"
+          required
+          class="w-full border p-2 rounded"
+        />
+
+        <div class="flex justify-end gap-2">
+          <button
+            type="button"
+            (click)="fecharModal()"
+            class="px-3 py-1 bg-red-400 rounded hover:bg-red-600"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="formEquip.invalid"
+            class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
+          >
+            Adicionar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  }
 </div>

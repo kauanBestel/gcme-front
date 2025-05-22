@@ -1,5 +1,5 @@
 export interface Equipamento {
-  id: String;
+  id?: String;
   nomeEquip: String;
   descricaoEquip: String;
   dataManutencao: Date;
