@@ -3,15 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { EquipamentoService } from './equipamento.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
   selector: 'app-equipamento',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatDividerModule],
   templateUrl: './equipamento.component.html',
 })
 export class EquipamentoComponent implements OnInit {
   public equipamentos: Equipamento[] = [];
+  public equipamentoSelecionado: Equipamento | null = null;
+  public modalAberto = false;
 
   constructor(private readonly equipamentoService: EquipamentoService) {}
 
@@ -26,6 +29,16 @@ export class EquipamentoComponent implements OnInit {
         console.log('erro ao listar equipamentos');
       },
     });
+  }
+
+  abrirModal(equipamento: Equipamento): void {
+    this.modalAberto = true;
+    this.equipamentoSelecionado = equipamento;
+  }
+
+  fecharModal(): void {
+    this.modalAberto = false;
+    this.equipamentoSelecionado = null;
   }
 
   public calculateProgress(equipamento: Equipamento): number {

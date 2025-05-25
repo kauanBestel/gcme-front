@@ -1,14 +1,22 @@
 import { Component } from '@angular/core';
-import { EquipamentoService } from '../equipamento/equipamento.service';
-import { Equipamento } from '../../../models/interface/equipamentoInterface';
+import { EquipamentoService } from '../equipamento.service';
+import { Equipamento } from '../../../../models/interface/equipamentoInterface';
 import { FormsModule } from '@angular/forms';
+import { HostListener } from '@angular/core';
 
 @Component({
-  selector: 'app-search-bar',
+  selector: 'app-addEquip-button',
   imports: [FormsModule],
-  templateUrl: './search-bar.component.html',
+  templateUrl: './addEquip-button.component.html',
 })
-export class SearchBarComponent {
+export class AddEquipButtonComponent {
+  @HostListener('document:keydown.escape', ['$event'])
+  onEscPressed(event: KeyboardEvent) {
+    if (this.modalAberto) {
+      this.fecharModal();
+    }
+  }
+
   modalAberto: boolean = false;
 
   novoEquipamento: Equipamento = {
@@ -16,6 +24,11 @@ export class SearchBarComponent {
     descricaoEquip: '',
     dataManutencao: new Date(),
     proximaManutencao: new Date(),
+    codigoEquip: 0,
+    marcaEquip: '',
+    rangeTipo: 0,
+    numeroSerie: '',
+    modelo: '',
   };
 
   constructor(private equipamentoService: EquipamentoService) {}
@@ -30,6 +43,10 @@ export class SearchBarComponent {
   }
 
   adicionarEquipamento(): void {
+    // Conversões explícitas:
+    this.novoEquipamento.codigoEquip = Number(this.novoEquipamento.codigoEquip);
+    this.novoEquipamento.rangeTipo = Number(this.novoEquipamento.rangeTipo);
+
     this.equipamentoService.create(this.novoEquipamento).subscribe({
       next: (res) => {
         console.log('Equipamento adicionado:', res);
@@ -47,6 +64,11 @@ export class SearchBarComponent {
       descricaoEquip: '',
       dataManutencao: new Date(),
       proximaManutencao: new Date(),
+      codigoEquip: 0,
+      marcaEquip: '',
+      rangeTipo: 0,
+      numeroSerie: '',
+      modelo: '',
     };
   }
 }

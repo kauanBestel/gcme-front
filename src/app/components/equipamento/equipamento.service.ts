@@ -16,7 +16,7 @@ export class EquipamentoService {
     return this.http.get<Equipamento[]>(this.baseUrl);
   }
 
-  getById(id: String): Observable<Equipamento> {
+  getById(id: number): Observable<Equipamento> {
     return this.http.get<Equipamento>(`${this.baseUrl}/${id}`);
   }
 

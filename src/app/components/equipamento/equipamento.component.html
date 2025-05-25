@@ -1,46 +1,130 @@
 <article class="bg-[#f3f3f3] p-3 space-y-2">
   <h2 class="text-lg font-semibold">Lista de Equipamentos</h2>
 
-  @if (equipamentos.length > 0) {
-  <div class="space-y-2">
-    @for (equipamento of equipamentos; track $index) {
-    <div
-      class="flex items-center gap-4 rounded-xl border border-black p-2 bg-white"
-    >
+  <article class="bg-[#f3f3f3] p-3 space-y-2">
+    @if (equipamentos.length > 0) {
+    <div class="space-y-2">
+      @for (equipamento of equipamentos; track $index) {
       <div
-        class="w-14 h-14 bg-[#219cee] text-white rounded-lg flex items-center justify-center text-xs shrink-0"
+        (click)="abrirModal(equipamento)"
+        class="flex items-center gap-4 rounded-xl border border-black p-2 bg-white cursor-pointer"
       >
-        imagem
-      </div>
+        <div
+          class="w-14 h-14 bg-[#219cee] text-white rounded-lg flex items-center justify-center text-xs shrink-0"
+        >
+          imagem
+        </div>
 
-      <div class="flex flex-col justify-center min-w-0 flex-1">
-        <h3 class="text-sm font-bold truncate">{{ equipamento.nomeEquip }}</h3>
-        <p class="text-xs text-gray-700 truncate">
-          {{ equipamento.descricaoEquip }}
-        </p>
+        <div class="flex flex-col justify-center min-w-0 flex-1">
+          <h3 class="text-sm font-bold truncate">
+            {{ equipamento.nomeEquip }}
+          </h3>
+          <p class="text-xs text-gray-700 truncate">
+            {{ equipamento.descricaoEquip }}
+          </p>
+        </div>
+
+        <div
+          class="flex flex-col items-end text-[10px] gap-1 shrink-0 w-[170px]"
+        >
+          <div class="flex justify-between w-full">
+            <span>{{ equipamento.dataManutencao | date : "dd/MM/yyyy" }}</span>
+            <span>{{
+              equipamento.proximaManutencao | date : "dd/MM/yyyy"
+            }}</span>
+          </div>
+          <div
+            class="relative w-full h-4 bg-white rounded-full border overflow-hidden"
+          >
+            <div
+              class="bg-green-500 h-full"
+              [ngStyle]="{ width: calculateProgress(equipamento) + '%' }"
+            ></div>
+            <span
+              class="absolute inset-0 flex justify-center items-center text-[10px] font-bold"
+            >
+              {{ calculateProgress(equipamento) }}%
+            </span>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </article>
+
+  @if (modalAberto && equipamentoSelecionado) {
+  <div
+    class="fixed inset-0 flex items-center justify-center z-50"
+    style="background-color: rgba(0, 0, 0, 0.5)"
+    (click)="fecharModal()"
+  >
+    <div
+      class="bg-white p-6 rounded-xl w-200 space-y-4 border"
+      (click)="$event.stopPropagation()"
+    >
+      <h2 class="text-lg font-bold">Informações do Equipamento</h2>
+      <mat-divider class="pb-10"></mat-divider>
+
+      <div class="flex gap-4">
+        <div
+          class="w-34 h-34 bg-[#219cee] text-white rounded-lg flex items-center justify-center text-xs shrink-0"
+        >
+          imagem
+        </div>
+
+        <div class="flex flex-col items-start min-w-0 flex-1">
+          <h2 class="text-3xl font-bold truncate">
+            {{ equipamentoSelecionado.nomeEquip }}
+          </h2>
+          <p class="text-xs text-gray-700 truncate">
+            {{ equipamentoSelecionado.descricaoEquip }}
+          </p>
+          <p class="text-xs text-gray-700 truncate">
+            {{ equipamentoSelecionado.modelo }}
+          </p>
+          <p class="text-xs text-gray-700 truncate">
+            {{ equipamentoSelecionado.rangeTipo }}
+          </p>
+          <p class="text-xs text-gray-700 truncate">
+            {{ equipamentoSelecionado.numeroSerie }}
+          </p>
+        </div>
       </div>
 
       <div class="flex flex-col items-end text-[10px] gap-1 shrink-0 w-[170px]">
         <div class="flex justify-between w-full">
-          <span>{{ equipamento.dataManutencao | date : "dd/MM/yyyy" }}</span>
-          <span>{{ equipamento.proximaManutencao | date : "dd/MM/yyyy" }}</span>
+          <span>{{
+            equipamentoSelecionado.dataManutencao | date : "dd/MM/yyyy"
+          }}</span>
+          <span>{{
+            equipamentoSelecionado.proximaManutencao | date : "dd/MM/yyyy"
+          }}</span>
         </div>
         <div
           class="relative w-full h-4 bg-white rounded-full border overflow-hidden"
         >
           <div
             class="bg-green-500 h-full"
-            [ngStyle]="{ width: calculateProgress(equipamento) + '%' }"
+            [ngStyle]="{
+              width: calculateProgress(equipamentoSelecionado) + '%'
+            }"
           ></div>
           <span
             class="absolute inset-0 flex justify-center items-center text-[10px] font-bold"
           >
-            {{ calculateProgress(equipamento) }}%
+            {{ calculateProgress(equipamentoSelecionado) }}%
           </span>
         </div>
       </div>
+
+      <button
+        class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg cursor-pointer"
+        (click)="fecharModal()"
+      >
+        Fechar
+      </button>
     </div>
-    }
   </div>
   }
 </article>

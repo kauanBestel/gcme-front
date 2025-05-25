@@ -2,13 +2,12 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FormComponent } from './components/form/form.component';
 import { EquipamentoComponent } from './components/equipamento/equipamento.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { AddEquipButtonComponent } from './components/equipamento/add-equip-button/addEquip-button.component';
 
 const COMPONENTS = [
-  SearchBarComponent,
+  AddEquipButtonComponent,
   SidebarComponent,
   HeaderComponent,
   EquipamentoComponent,
